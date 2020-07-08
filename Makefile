@@ -1,0 +1,11 @@
+GITHUB_RUNNER_VERSION="2.263.0"
+DOCKER_IMAGE_VERSION="latest"
+DOCKER_IMAGE_NAME="sgryczan/github-runner"
+
+.PHONY: build
+build:
+	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --build-arg GITHUB_RUNNER_VERSION=$(GITHUB_RUNNER_VERSION) .
+
+.PHONY: push
+push:
+	docker push $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VERSION)

@@ -15,6 +15,21 @@ You can build this image yourself, or use the Docker image from the [Docker Hub]
 * Labels
 * Graceful shutdown
 
+## Deploying to Kubernetes
+
+1. Create a [GitHub Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) (PAT)
+    * Give it the `repo` scope for a private repo, or the `public_repo` scope for a public one.
+
+2. Create the secret:
+ ```
+ $ kubectl create secret generic github --from-literal=pat=<YOUR PAT>
+ ```
+
+3. Create the deployment:
+```
+$ kubectl apply -f deployment.yml
+```
+
 ## Examples
 
 Register a runner to a repository.
