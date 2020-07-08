@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  publish:
+  publish-default:
     name: Publish Image
     runs-on: ubuntu-latest
     steps:
@@ -14,9 +14,24 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: sgryczan/github-runner/github-runner
+          name: sgryczan/github-runner/debian
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           dockerfile: Dockerfile
+          tags: "latest,${{ env.RELEASE_VERSION }}"
+   
+  publish-terraform:
+    name: Publish Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sgryczan/github-runner/terraform
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          dockerfile: docker/terraform/Dockerfile
           tags: "latest,${{ env.RELEASE_VERSION }}"
