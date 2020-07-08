@@ -24,8 +24,15 @@ You can build this image yourself, or use the Docker image from the [Docker Hub]
  ```
  $ kubectl create secret generic github --from-literal=pat=<YOUR PAT>
  ```
-
-3. Create the deployment:
+3. Modify `deployment.yml` fields to target your repository:
+```
+env:
+    - name: GITHUB_OWNER
+      value: <YOUR ORG>
+    - name: GITHUB_REPOSITORY
+    value: <YOUR REPO>
+```
+4. Create the deployment:
 ```
 $ kubectl apply -f deployment.yml
 ```
