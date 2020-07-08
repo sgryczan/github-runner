@@ -39,7 +39,7 @@ docker run --name github-runner \
      -e GITHUB_OWNER=username-or-organization \
      -e GITHUB_REPOSITORY=my-repository \
      -e GITHUB_PAT=[PAT] \
-     sanderknape/github-runner
+     sgryczan/github-runner:latest
 ```
 
 Create an organization-wide runner.
@@ -48,7 +48,7 @@ Create an organization-wide runner.
 docker run --name github-runner \
     -e GITHUB_OWNER=username-or-organization \
     -e GITHUB_PAT=[PAT] \
-    sanderknape/github-runner
+    sgryczan/github-runner:latest
 ```
 
 Set labels on the runner.
@@ -59,7 +59,7 @@ docker run --name github-runner \
     -e GITHUB_REPOSITORY=my-repository \
     -e GITHUB_PAT=[PAT] \
     -e RUNNER_LABELS=comma,separated,labels \
-    sanderknape/github-runner
+    sgryczan/github-runner:latest
 ```
 
 
