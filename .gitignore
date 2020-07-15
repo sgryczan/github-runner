@@ -1,1 +1,5 @@
-.idea
+### IDE files
+.idea/*
+!.idea/runConfigurations
+!.idea/codeStyles
+*.iml
