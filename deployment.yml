@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: github-runner
-        image: sgryczan/github-runner:latest
+        image: michaelcoll/github-runner:latest
         env:
         - name: GITHUB_OWNER
           value: your-organization
