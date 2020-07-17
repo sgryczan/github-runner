@@ -10,27 +10,23 @@ You can build this image yourself, or use the Docker image from the [Docker Hub]
 
 ## Features
 
-* Repository runners
 * Organizational runners
 * Labels
 * Graceful shutdown
 
 ## Deploying to Kubernetes
 
-1. Create a [GitHub Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) (PAT)
-    * Give it the `repo` scope for a private repo, or the `public_repo` scope for a public one.
+1. Get a token in your organisation settings -> Actions -> Add runner
 
-2. Create the secret:
- ```
- $ kubectl create secret generic github --from-literal=pat=<YOUR PAT>
- ```
-3. Modify `deployment.yml` fields to target your repository:
+3. Modify `deployment.yml` fields to target your repository and org token:
 ```
+data:
+    # Base64 encoded of the token
+    TOKEN: <a base64 encoded token>
+[...]
 env:
-    - name: GITHUB_OWNER
+    - name: ORG_NAME
       value: <YOUR ORG>
-    - name: GITHUB_REPOSITORY
-    value: <YOUR REPO>
 ```
 4. Create the deployment:
 ```
@@ -39,22 +35,12 @@ $ kubectl apply -f deployment.yml
 
 ## Examples
 
-Register a runner to a repository.
-
-```sh
-docker run --name github-runner \
-     -e GITHUB_OWNER=username-or-organization \
-     -e GITHUB_REPOSITORY=my-repository \
-     -e GITHUB_PAT=[PAT] \
-     michaelcoll/github-runner:latest
-```
-
 Create an organization-wide runner.
 
 ```sh
 docker run --name github-runner \
-    -e GITHUB_OWNER=username-or-organization \
-    -e GITHUB_PAT=[PAT] \
+    -e ORG_NAME=organization \
+    -e TOKEN=[token] \
     michaelcoll/github-runner:latest
 ```
 
@@ -62,9 +48,8 @@ Set labels on the runner.
 
 ```sh
 docker run --name github-runner \
-    -e GITHUB_OWNER=username-or-organization \
-    -e GITHUB_REPOSITORY=my-repository \
-    -e GITHUB_PAT=[PAT] \
+    -e ORG_NAME=organization \
+    -e TOKEN=[token] \
     -e RUNNER_LABELS=comma,separated,labels \
     michaelcoll/github-runner:latest
 ```

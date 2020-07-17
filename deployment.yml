@@ -1,3 +1,17 @@
+### Secret
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-action
+    namespace: github
+type: Opaque
+data:
+    # Base64 encoded of the token
+    TOKEN: <a base64 encoded token>
+
+---
+
+### Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,13 +31,16 @@ spec:
       containers:
       - name: github-runner
         image: michaelcoll/github-runner:latest
+        envFrom:
+          - secretRef:
+              name: github-action
         env:
-        - name: GITHUB_OWNER
+        - name: ORG_NAME
           value: your-organization
-        - name: GITHUB_REPOSITORY
-          value: your-repository
-        - name: GITHUB_PAT # stored separately in a Kubernetes secret
-          valueFrom:
-            secretKeyRef:
-              name: my-secret
-              key: pat
+        volumeMounts:
+          - mountPath: /var/run
+            name: docker-sock
+      volumes:
+        - name: docker-sock
+          hostPath:
+              path: /var/run
